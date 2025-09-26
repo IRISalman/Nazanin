@@ -1,14 +1,13 @@
-// --- Constants ---
+// --- Constants (بدون تغییر) ---
 const TARGET_YEAR = 2025;
 const TARGET_MONTH = 9; 
 const TARGET_DAY = 27;
 
 const START_YEAR = 2007;
 
-// Days in each month (for non-leap year 2025)
 const DAYS_IN_MONTH = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-// HTML Elements
+// HTML Elements (بدون تغییر)
 const yearEl = document.getElementById('year-counter');
 const monthEl = document.getElementById('month-counter');
 const dayEl = document.getElementById('day-counter');
@@ -17,7 +16,7 @@ const timerDisplayEl = document.querySelector('.timer-display');
 const monthUnit = document.getElementById('month-unit');
 const dayUnit = document.getElementById('day-unit');
 
-// Final Message Elements
+// Final Message Elements (بدون تغییر)
 const finalMessageContainer = document.getElementById('final-message-container');
 const originalMessageEl = document.getElementById('original-message');
 const crossedOutMessageEl = document.getElementById('crossed-out-message');
@@ -25,7 +24,7 @@ const dateMessageEl = document.getElementById('date-message');
 const crossOutLineEl = document.getElementById('cross-out-line');
 
 
-// --- Helper Functions ---
+// --- Helper Functions (بدون تغییر) ---
 function formatNumber(num) {
     return String(num).padStart(2, '0');
 }
@@ -50,7 +49,6 @@ function animateValueChange(element, newValue, duration, ease = "power2.inOut") 
     });
 }
 
-// تابع برای افکت تایپ نوشتاری
 function typeEffect(element, textToType, duration) {
     const timePerChar = duration / textToType.length;
     let typedText = '';
@@ -77,10 +75,11 @@ const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
 // --- Initial Setup (Hiding all final message elements) ---
 gsap.set([monthUnit, dayUnit], { opacity: 0, scale: 0.8, visibility: 'hidden' }); 
 gsap.set(finalMessageContainer, { opacity: 0, scale: 0.8, visibility: 'hidden' }); 
+// **تغییر:** پنهان‌سازی اولیه متن‌ها با opacity و visibility
+gsap.set(originalMessageEl, { opacity: 0, visibility: 'hidden' }); 
 gsap.set(crossedOutMessageEl, { opacity: 0, visibility: 'hidden' });
 gsap.set(dateMessageEl, { opacity: 0, visibility: 'hidden' }); 
 gsap.set(crossOutLineEl, { width: 0, opacity: 0, visibility: 'hidden' }); 
-// برای افکت تایپ، متن نهایی را در ابتدا خالی می‌کنیم
 crossedOutMessageEl.textContent = ''; 
 
 yearEl.textContent = START_YEAR;
@@ -88,7 +87,7 @@ monthEl.textContent = '01';
 dayEl.textContent = '01';
 
 
-// 1. Year Count Phase (2007 to 2025): 15 seconds
+// 1. Year Count Phase (بدون تغییر)
 const YEAR_COUNT_DURATION = 15;
 const YEARS_TO_COUNT = TARGET_YEAR - START_YEAR;
 const YEAR_STEP_DURATION = YEAR_COUNT_DURATION / YEARS_TO_COUNT;
@@ -102,7 +101,7 @@ for (let i = 0; i < YEARS_TO_COUNT; i++) {
     }, `+=${i === 0 ? 0 : YEAR_STEP_DURATION}`); 
 }
 
-// 2. Month/Day Reveal and Position Shift Phase (at 15 second mark)
+// 2. Month/Day Reveal and Position Shift Phase (بدون تغییر)
 tl.add(function() {
     
     gsap.to(timerDisplayEl, { duration: 0.8, y: -30, ease: "power2.out" });
@@ -120,7 +119,7 @@ tl.add(function() {
 }, ">"); 
 
 
-// 3. Synchronized Calendar Count Phase (10 seconds)
+// 3. Synchronized Calendar Count Phase (بدون تغییر منطق شمارش)
 const CALENDAR_COUNT_DURATION = 10; 
 const DAYS_TO_SIMULATE = 270; 
 
@@ -141,7 +140,6 @@ tl.add(function() {
             if (progressFloor > lastProgressFloor) {
                 currentDay++;
                 
-                // Calendar logic
                 if (currentDay > DAYS_IN_MONTH[currentMonth]) {
                     if (currentMonth === TARGET_MONTH && currentDay > TARGET_DAY) {
                         currentDay = TARGET_DAY; 
@@ -177,59 +175,54 @@ tl.add(function() {
             });
 
             // Step 2: Show original message
-            gsap.set(originalMessageEl, { opacity: 1, visibility: 'visible', display: 'block' });
+            gsap.set(originalMessageEl, { opacity: 1, visibility: 'visible' });
 
-            // Calculate position of the line dynamically
-            const originalMessageRect = originalMessageEl.getBoundingClientRect();
-            const containerRect = finalMessageContainer.getBoundingClientRect();
+            // **حذف محاسبات پیچیده: فقط عرض متن را می‌گیریم**
+            const originalMessageWidth = originalMessageEl.offsetWidth;
 
             gsap.set(crossOutLineEl, {
                 width: 0, 
-                x: originalMessageRect.left - containerRect.left + (originalMessageRect.width / 2), 
-                y: originalMessageRect.top - containerRect.top + (originalMessageRect.height / 2),
                 opacity: 1,
                 visibility: 'visible',
-                display: 'block' 
             });
             
-            // GSAP Timeline for the final text reveal
             const textRevealTl = gsap.timeline();
 
-            // Step 3: Draw the cross-out line
+            // Step 3: Draw the cross-out line (خط چون مطلق است، در مرکز قرار می‌گیرد)
             textRevealTl.to(crossOutLineEl, {
                 duration: 0.4,
-                width: originalMessageRect.width + 10, 
+                width: originalMessageWidth + 10, 
                 ease: "power2.inOut",
             })
             // Step 4: Fade out original text
             .to(originalMessageEl, { 
                 duration: 0.3, 
                 opacity: 0,
-                onComplete: () => { gsap.set(originalMessageEl, { visibility: 'hidden', display: 'none' }); } 
+                // **مهم:** چون مطلق است، فقط کافی است محو شود
+                onComplete: () => { gsap.set(originalMessageEl, { visibility: 'hidden' }); } 
             }, "+=0.1") 
             .to(crossOutLineEl, { 
                 duration: 0.3, 
                 opacity: 0,
-                onComplete: () => { gsap.set(crossOutLineEl, { visibility: 'hidden', display: 'none' }); }
+                onComplete: () => { gsap.set(crossOutLineEl, { visibility: 'hidden' }); }
             }, "<")
             
-            // Step 5: **افکت تایپ** متن نهایی (Birthday yes, Happy never)
+            // Step 5: افکت تایپ متن نهایی
             .add(function() {
                 const finalWednesdayText = "💀 Birthday yes, Happy never 🖤";
+                // **مهم:** نمایش المان متن نهایی قبل از تایپ
                 gsap.set(crossedOutMessageEl, { opacity: 1, visibility: 'visible' }); 
                 
-                // 1.5 ثانیه زمان برای تایپ
                 return typeEffect(crossedOutMessageEl, finalWednesdayText, 1.5);
                 
-            }, "+=0.2") // 0.2 ثانیه تأخیر پس از محو شدن
+            }, "+=0.2") 
             
             // Step 6: نمایش تاریخ
             .to(dateMessageEl, { 
                 duration: 0.5, 
                 opacity: 1,
                 visibility: 'visible' 
-            }, ">"); // بلافاصله بعد از اتمام تایپ
-
+            }, ">"); 
         }
     });
 
