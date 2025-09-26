@@ -1,52 +1,51 @@
 /* --- Base Styles (Inspired by the balloons: soft lilac, black) --- */
+
+/* تنظیم box-sizing برای حل مشکلات ابعادی در موبایل */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    /* Soft white/off-white background, like the wall */
-    background-color: #F8F8F8; /* Light gray / almost white */
+    background-color: #F8F8F8;
     font-family: 'Tahoma', sans-serif;
-    color: #333333; /* Dark gray for general text */
+    color: #333333;
     direction: ltr; 
-    /* مهم برای موبایل: جلوگیری از اسکرول عمودی ناخواسته */
     overflow-x: hidden;
 }
 
 .countdown-card {
     background-color: rgba(255, 255, 255, 0.1);
-    /* استفاده از ابعاد حداکثری: روی دسکتاپ از 600px بزرگتر نشود */
-    max-width: 600px;
-    /* در موبایل، 90% عرض صفحه را اشغال کند */
+    /* حذف max-width: 600px برای انعطاف‌پذیری بیشتر */
     width: 90%; 
-    padding: 30px 20px; /* کاهش Padding برای موبایل */
+    padding: 30px 10px; /* کاهش شدید Padding برای موبایل */
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
     text-align: center;
     backdrop-filter: blur(5px);
-    border: 1px solid #9370DB; /* Medium Purple, like a darker lilac */
+    border: 1px solid #9370DB;
     position: relative; 
 }
 
 /* Timer Display Styles */
 .timer-display { 
     display: flex; 
-    /* کاهش فاصله در موبایل */
-    gap: 15px; 
+    /* کاهش فاصله بین واحدها */
+    gap: 10px; 
     justify-content: center; 
 }
 .time-unit { 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    opacity: 1; 
-    transform: scale(1);
-    /* اجازه دهید المان‌ها کمی فشرده شوند */
     min-width: 0; 
 }
 .label { 
-    font-size: 0.8em; /* فونت کوچکتر برای موبایل */
+    font-size: 0.7em; /* کوچکتر شدن فونت برای جا شدن */
     margin-top: 5px; 
     opacity: 0.8; 
     color: #4B0082; 
@@ -54,25 +53,26 @@ body {
 
 /* --- Counter Display Styles --- */
 .counter {
-    /* استفاده از واحد vw برای فونت که با اندازه صفحه تغییر می‌کند */
-    font-size: 8vw; 
+    /* فونت کوچک‌تر و کاملاً واکنش‌گرا برای موبایل */
+    font-size: 7vw; 
     font-weight: bold;
-    padding: 5px 8px; /* کاهش Padding */
+    padding: 3px 5px; /* کاهش شدید Padding */
     background-color: #000000; 
-    color: #C8A2C8; /* Lilac */
+    color: #C8A2C8;
     border-radius: 8px;
-    /* حذف min-width ثابت تا روی موبایل جمع شود */
+    /* حذف min-width */
     min-width: auto; 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     display: inline-block; 
     overflow: hidden;
+    line-height: 1.2; /* تنظیم line-height برای جلوگیری از فضای اضافی */
 }
 
 /* Final Message Container Styling */
 #final-message-container {
     margin-top: 25px;
-    /* فونت نسبی (3.5vw) برای متن اصلی */
-    font-size: 4.5vw; 
+    /* فونت واکنش‌گرا برای متن نهایی */
+    font-size: 4vw; 
     font-weight: bold;
     color: #4B0082; 
     text-shadow: 0 0 5px rgba(75, 0, 130, 0.3); 
@@ -80,6 +80,8 @@ body {
     display: flex; 
     flex-direction: column;
     align-items: center;
+    /* اطمینان از شکستن خط در صورت نیاز */
+    word-break: break-word; 
 }
 
 /* Specific styling for the lines of text */
@@ -90,7 +92,7 @@ body {
 }
 
 #crossed-out-message {
-    font-size: 1.1em; 
+    font-size: 1.2em; /* کمی بزرگتر از بقیه متن در این بخش */
     color: #000000; 
 }
 #date-message {
@@ -101,7 +103,7 @@ body {
 /* Style for the cross-out line */
 #cross-out-line {
     position: absolute;
-    height: 3px; /* کاهش ضخامت خط برای موبایل */
+    height: 3px;
     background-color: red; 
     z-index: 10;
     top: 0;
@@ -113,13 +115,14 @@ body {
 /* --- Media Query برای صفحه نمایش‌های بزرگتر از 600px (مثل دسکتاپ) --- */
 @media (min-width: 600px) {
     .countdown-card {
-        padding: 40px 60px; /* بازگشت به Padding بزرگتر */
+        max-width: 600px;
+        padding: 40px 60px;
     }
     .timer-display {
-        gap: 30px; /* بازگشت به فاصله بزرگتر */
+        gap: 30px;
     }
     .counter {
-        font-size: 4em; /* فونت ثابت بزرگ برای دسکتاپ */
+        font-size: 4em;
         padding: 10px 15px;
         min-width: 120px;
     }
@@ -127,9 +130,9 @@ body {
         font-size: 0.9em;
     }
     #final-message-container {
-        font-size: 2.2em; /* فونت ثابت بزرگ برای دسکتاپ */
+        font-size: 2.2em;
     }
     #cross-out-line {
-        height: 4px; /* ضخامت بیشتر خط برای دسکتاپ */
+        height: 4px;
     }
 }
