@@ -1,0 +1,108 @@
+/* --- Base Styles (Inspired by the balloons: soft lilac, black) --- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    /* Soft white/off-white background, like the wall */
+    background-color: #F8F8F8; /* Light gray / almost white */
+    font-family: 'Tahoma', sans-serif;
+    color: #333333; /* Dark gray for general text */
+    direction: ltr; 
+}
+
+.countdown-card {
+    /* Transparent or very light, blending with background */
+    background-color: rgba(255, 255, 255, 0.1); /* Very subtle white tint */
+    padding: 40px 60px;
+    border-radius: 20px;
+    /* Soft shadow to lift it slightly */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    backdrop-filter: blur(5px);
+    /* Border like the darker balloon/cake elements */
+    border: 1px solid #9370DB; /* Medium Purple, like a darker lilac */
+    position: relative; 
+}
+
+/* Timer Display Styles */
+.timer-display { 
+    display: flex; 
+    gap: 30px; 
+    justify-content: center; 
+}
+.time-unit { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    opacity: 1; 
+    transform: scale(1);
+}
+.label { 
+    font-size: 0.9em; 
+    margin-top: 10px; 
+    opacity: 0.8; 
+    color: #4B0082; /* Deep Purple for labels */
+}
+
+/* --- Counter Display Styles --- */
+.counter {
+    font-size: 4em;
+    font-weight: bold;
+    padding: 10px 15px;
+    /* Solid black background for counters, like black balloons */
+    background-color: #000000; 
+    /* Lilac/Lavender color for the numbers, like purple balloons */
+    color: #C8A2C8; /* Lilac */
+    border-radius: 8px;
+    min-width: 120px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    display: inline-block; 
+    overflow: hidden;
+}
+
+/* Final Message Container Styling */
+#final-message-container {
+    margin-top: 30px;
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #4B0082; /* Deep Purple for main message */
+    text-shadow: 0 0 5px rgba(75, 0, 130, 0.3); /* Subtle purple glow */
+    position: relative; 
+    display: flex; /* Use flexbox to center content */
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Specific styling for the lines of text */
+#final-message-container p {
+    margin: 5px 0;
+    line-height: 1.2;
+    /* Ensure no text-decoration for p tags */
+    text-decoration: none !important; 
+}
+#original-message {
+    font-size: 1em;
+}
+#crossed-out-message {
+    font-size: 1.1em; 
+    color: #000000; /* Black for Wednesday's message */
+}
+#date-message {
+    font-size: 0.8em;
+    color: #7A007A; /* Darker purple for the date */
+}
+
+/* Style for the cross-out line (initially hidden) */
+#cross-out-line {
+    position: absolute;
+    height: 4px; 
+    background-color: red; 
+    z-index: 10;
+    /* Important: Center it correctly relative to its parent (p tag) */
+    top: 0; /* Will be set dynamically by JS */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for its own width */
+    width: 0; /* Starts at zero width */
+}
