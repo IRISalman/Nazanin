@@ -10,18 +10,21 @@ body {
     font-family: 'Tahoma', sans-serif;
     color: #333333; /* Dark gray for general text */
     direction: ltr; 
+    /* مهم برای موبایل: جلوگیری از اسکرول عمودی ناخواسته */
+    overflow-x: hidden;
 }
 
 .countdown-card {
-    /* Transparent or very light, blending with background */
-    background-color: rgba(255, 255, 255, 0.1); /* Very subtle white tint */
-    padding: 40px 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* استفاده از ابعاد حداکثری: روی دسکتاپ از 600px بزرگتر نشود */
+    max-width: 600px;
+    /* در موبایل، 90% عرض صفحه را اشغال کند */
+    width: 90%; 
+    padding: 30px 20px; /* کاهش Padding برای موبایل */
     border-radius: 20px;
-    /* Soft shadow to lift it slightly */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
     text-align: center;
     backdrop-filter: blur(5px);
-    /* Border like the darker balloon/cake elements */
     border: 1px solid #9370DB; /* Medium Purple, like a darker lilac */
     position: relative; 
 }
@@ -29,7 +32,8 @@ body {
 /* Timer Display Styles */
 .timer-display { 
     display: flex; 
-    gap: 30px; 
+    /* کاهش فاصله در موبایل */
+    gap: 15px; 
     justify-content: center; 
 }
 .time-unit { 
@@ -38,25 +42,27 @@ body {
     align-items: center; 
     opacity: 1; 
     transform: scale(1);
+    /* اجازه دهید المان‌ها کمی فشرده شوند */
+    min-width: 0; 
 }
 .label { 
-    font-size: 0.9em; 
-    margin-top: 10px; 
+    font-size: 0.8em; /* فونت کوچکتر برای موبایل */
+    margin-top: 5px; 
     opacity: 0.8; 
-    color: #4B0082; /* Deep Purple for labels */
+    color: #4B0082; 
 }
 
 /* --- Counter Display Styles --- */
 .counter {
-    font-size: 4em;
+    /* استفاده از واحد vw برای فونت که با اندازه صفحه تغییر می‌کند */
+    font-size: 8vw; 
     font-weight: bold;
-    padding: 10px 15px;
-    /* Solid black background for counters, like black balloons */
+    padding: 5px 8px; /* کاهش Padding */
     background-color: #000000; 
-    /* Lilac/Lavender color for the numbers, like purple balloons */
     color: #C8A2C8; /* Lilac */
     border-radius: 8px;
-    min-width: 120px;
+    /* حذف min-width ثابت تا روی موبایل جمع شود */
+    min-width: auto; 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     display: inline-block; 
     overflow: hidden;
@@ -64,13 +70,14 @@ body {
 
 /* Final Message Container Styling */
 #final-message-container {
-    margin-top: 30px;
-    font-size: 2.2em;
+    margin-top: 25px;
+    /* فونت نسبی (3.5vw) برای متن اصلی */
+    font-size: 4.5vw; 
     font-weight: bold;
-    color: #4B0082; /* Deep Purple for main message */
-    text-shadow: 0 0 5px rgba(75, 0, 130, 0.3); /* Subtle purple glow */
+    color: #4B0082; 
+    text-shadow: 0 0 5px rgba(75, 0, 130, 0.3); 
     position: relative; 
-    display: flex; /* Use flexbox to center content */
+    display: flex; 
     flex-direction: column;
     align-items: center;
 }
@@ -79,30 +86,50 @@ body {
 #final-message-container p {
     margin: 5px 0;
     line-height: 1.2;
-    /* Ensure no text-decoration for p tags */
     text-decoration: none !important; 
 }
-#original-message {
-    font-size: 1em;
-}
+
 #crossed-out-message {
     font-size: 1.1em; 
-    color: #000000; /* Black for Wednesday's message */
+    color: #000000; 
 }
 #date-message {
     font-size: 0.8em;
-    color: #7A007A; /* Darker purple for the date */
+    color: #7A007A; 
 }
 
-/* Style for the cross-out line (initially hidden) */
+/* Style for the cross-out line */
 #cross-out-line {
     position: absolute;
-    height: 4px; 
+    height: 3px; /* کاهش ضخامت خط برای موبایل */
     background-color: red; 
     z-index: 10;
-    /* Important: Center it correctly relative to its parent (p tag) */
-    top: 0; /* Will be set dynamically by JS */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for its own width */
-    width: 0; /* Starts at zero width */
+    top: 0;
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 0; 
+}
+
+/* --- Media Query برای صفحه نمایش‌های بزرگتر از 600px (مثل دسکتاپ) --- */
+@media (min-width: 600px) {
+    .countdown-card {
+        padding: 40px 60px; /* بازگشت به Padding بزرگتر */
+    }
+    .timer-display {
+        gap: 30px; /* بازگشت به فاصله بزرگتر */
+    }
+    .counter {
+        font-size: 4em; /* فونت ثابت بزرگ برای دسکتاپ */
+        padding: 10px 15px;
+        min-width: 120px;
+    }
+    .label {
+        font-size: 0.9em;
+    }
+    #final-message-container {
+        font-size: 2.2em; /* فونت ثابت بزرگ برای دسکتاپ */
+    }
+    #cross-out-line {
+        height: 4px; /* ضخامت بیشتر خط برای دسکتاپ */
+    }
 }
