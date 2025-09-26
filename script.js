@@ -24,6 +24,7 @@ const crossedOutMessageEl = document.getElementById('crossed-out-message');
 const dateMessageEl = document.getElementById('date-message');
 const crossOutLineEl = document.getElementById('cross-out-line');
 
+
 // --- Helper Functions ---
 function formatNumber(num) {
     return String(num).padStart(2, '0');
@@ -49,9 +50,8 @@ function animateValueChange(element, newValue, duration, ease = "power2.inOut") 
     });
 }
 
-// **تابع جدید برای افکت تایپ**
+// تابع برای افکت تایپ نوشتاری
 function typeEffect(element, textToType, duration) {
-    // تعداد کاراکترها تقسیم بر کل زمان برای تعیین سرعت تایپ هر حرف
     const timePerChar = duration / textToType.length;
     let typedText = '';
     let charIndex = 0;
@@ -66,7 +66,7 @@ function typeEffect(element, textToType, duration) {
                 clearInterval(interval);
                 resolve();
             }
-        }, timePerChar * 1000); // زمان را به میلی‌ثانیه تبدیل می‌کنیم
+        }, timePerChar * 1000); 
     });
 }
 
@@ -213,9 +213,9 @@ tl.add(function() {
                 onComplete: () => { gsap.set(crossOutLineEl, { visibility: 'hidden', display: 'none' }); }
             }, "<")
             
-            // Step 5: **افکت تایپ** متن نهایی (HAPPY NO! BIRTHDAY YES!)
+            // Step 5: **افکت تایپ** متن نهایی (Birthday yes, Happy never)
             .add(function() {
-                const finalWednesdayText = "💀 HAPPY NO! BIRTHDAY YES! 🖤";
+                const finalWednesdayText = "💀 Birthday yes, Happy never 🖤";
                 gsap.set(crossedOutMessageEl, { opacity: 1, visibility: 'visible' }); 
                 
                 // 1.5 ثانیه زمان برای تایپ
